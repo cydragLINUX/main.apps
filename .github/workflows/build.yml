@@ -2,32 +2,35 @@ name: Build APK
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+    - name: 🔽 Kodni yuklash
+      uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+    - name: 🐍 Python o‘rnatish
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip build-essential
-          pip install --upgrade pip
-          pip install cython buildozer
+    - name: 📦 Paketlarni o‘rnatish
+      run: |
+        sudo apt update
+        sudo apt install -y zip unzip openjdk-17-jdk python3-pip build-essential
+        pip install --upgrade pip
+        pip install cython buildozer
 
-      - name: Build APK
-        run: |
-          buildozer android debug
+    - name: 📱 APKni build qilish
+      run: |
+        buildozer android debug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: WifiAnalyzer.apk
-          path: bin/*.apk
+    - name: 📤 APKni yuklash
+      uses: actions/upload-artifact@v3
+      with:
+        name: wifi-analyzer-apk
+        path: bin/*.apk
