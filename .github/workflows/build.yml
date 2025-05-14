@@ -34,3 +34,4 @@ jobs:
       with:
         name: wifi-analyzer-apk
         path: bin/*.apk
+        retention-days: 1
